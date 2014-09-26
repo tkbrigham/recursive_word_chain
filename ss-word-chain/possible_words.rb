@@ -26,7 +26,7 @@ def poss_words(current, target)
     output << del_let_words(current, target)
   end
   output << non_opt_words(current)
-  output.flatten
+  output.flatten.uniq
 end
 
 ##### TEST ######
