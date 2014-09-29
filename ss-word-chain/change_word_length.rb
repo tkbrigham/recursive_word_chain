@@ -24,6 +24,21 @@ end
 #puts "optimal words for 'slice' and 'climbings': ", words.inspect, ""
 ############
 
+def optimal_words_back(current, target)
+  output = []
+  (1..short_word_len(current, target)+1).each do |index|
+    next if current[-index] == target[-index]
+    test_word = current.sub(current[-index], target[-index])
+    output << test_word if legal_word?(test_word)
+  end
+  output
+end
+
+### TEST ###
+#words = optimal_words_back("dicey", "glider")
+#puts "optimal words for 'slice' and 'climbings': ", words.inspect, ""
+############
+
 
 def add_let_words(current, target)
   output = []

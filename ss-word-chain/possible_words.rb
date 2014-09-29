@@ -19,6 +19,7 @@ end
 
 def poss_words(current, target)
   output = optimal_words(current, target)
+  output << optimal_words_back(current, target)
   case length_adjustment(current, target)
   when 1
     output << add_let_words(current, target)
@@ -26,11 +27,11 @@ def poss_words(current, target)
     output << del_let_words(current, target)
   end
   output << non_opt_words(current)
-  output.flatten.uniq
+  output.flatten.uniq.reject { |item| item == current }
 end
 
 ##### TEST ######
-#words = poss_words("slice", "climbed")
+#words = poss_words("bicker", "glider")
 #puts "all words for 'slice' to 'climbed'", words.inspect
 #################
 
