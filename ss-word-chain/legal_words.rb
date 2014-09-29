@@ -12,7 +12,8 @@ end
 def legal_addition_words(current,index)
   output = []
   ('a'..'z').each do |let|
-    test_word = add_letter(current, index, let)
+    test_word = current.clone
+    add_letter(test_word, index, let)
     output << test_word if legal_word?(test_word)
   end
   output.compact
