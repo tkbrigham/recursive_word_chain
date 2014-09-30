@@ -45,9 +45,3 @@ end
 #puts "poss_words for 'slides' to 'slider' = #{words.inspect}"
 #################
 
-
-
-
-
-
-
