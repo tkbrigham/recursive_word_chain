@@ -40,8 +40,8 @@ end
 
 
 ##### TEST ######
-words = poss_words("slides", "sliders")
-puts "poss_words for 'slides' to 'slider' = #{words.inspect}"
+#words = poss_words("slides", "sliders")
+#puts "poss_words for 'slides' to 'slider' = #{words.inspect}"
 #################
 
 
