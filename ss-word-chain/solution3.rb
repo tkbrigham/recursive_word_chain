@@ -11,56 +11,62 @@ end
 
 def word_chain(starting_word, target, target_length=nil)
   $solution ||= [starting_word]
-
-  #puts "solution type is #{$solution.class}"
-  #return
-
   $sol_found ||= false
-  $target_length ||= 2
+  $target_length ||= 3
   puts "++++ WORD_CHAIN METHOD WITH TARGET LENGTH OF #{$target_length} ++++"
-  recursive_path(starting_word, target)
-  if $solution.length == $target_length
+  recursive_path(starting_word, target, 0)
+  if $sol_found && $solution.length <= $target_length
     puts "++++ WORD_CHAIN METHOD HAS FOUND SOL AT TARGET LENGTH #{$target_length} ++++"
-    puts $solution.inspect
+    puts $solution.join(" --> ")
     return
   else
     puts "++++ WORD_CHAIN METHOD NOT AT TARGET LENGTH ++++"
-    word_chain(starting_word, target, $target_length + 1)
+    $target_length += 1
+    $solution = [starting_word]
+    word_chain(starting_word, target, $target_length)
   end
 end
 
-def recursive_path(current, target)
-  $count ||= 0
-  $count += 1
-  puts "- TOP OF RECURSIVE PATH ##{$count}"
-  return if $sol_found
-  if poss_words(current, target).include?(target)
-    puts "--- TARGET IN POSSIBLE WORDS"
+
+
+def recursive_path(current, target, count)
+  $solution ||= [current]
+  count += 1
+  puts "- TOP OF RECURSIVE PATH ##{count}"
+  return $solution.inspect if $sol_found
+  puts "- SOLUTION = #{$solution}, length = #{$solution.length}, target = #{$target_length}"
+  poss_words_arr = poss_words(current, target).reject { |word| $solution.include?(word) }
+  return $solution.inspect if $solution.length == $target_length
+  if poss_words_arr.include?(target)
+    puts "--- (path #{count}) TARGET IN POSSIBLE WORDS"
     $solution << target
-    if $solution.length == $target_length
-      puts "----- SOLUTION IS TARGET LENGTH"
+    puts "--- (path #{count}) SOLUTION LENGTH = #{$solution.length}, target length = #{$target_length}"
+    puts "--- (path #{count}) sol <= target? #{$solution.length <= $target_length}"
+    if $solution.length <= $target_length
+      puts "-----(path #{count}) SOLUTION IS TARGET LENGTH"
       $sol_found = true
-      return
+      puts "**FINAL SOLUTION = #{$solution.inspect}"
+      return $solution.inspect
     else
-      puts "----- SOLUTION IS NOT TARGET LENGTH"
+      puts "-----(path #{count}) SOLUTION IS NOT TARGET LENGTH"
       $solution.pop
-      return
+      return $solution.inspect
     end
   else
-    puts "--- TARGET NOT IN POSSIBLE WORDS, ENTERING LOOP"
-    poss_words(current, target).each do |word|
-      puts "----- TRYING WORD #{word}"
+    puts "---(path #{count}) POSS WORDS = #{poss_words_arr}"
+    puts "---(path #{count}) TARGET NOT IN POSSIBLE WORDS, ENTERING LOOP"
+    poss_words_arr.each do |word|
+      puts "-----(path #{count}) TRYING WORD #{word}"
       if $sol_found || $solution.length == $target_length
-        puts "------- sol_found = #{$sol_found}, or #{$solution.length == $target_length}"
-        puts "Solution = #{$solution.inspect}"
-        return
+        puts "-------(path #{count}) sol_found = #{$sol_found}, or #{$solution.length == $target_length}"
+        return $solution.inspect 
       end
       $solution << word
-      puts "----- RE-ENTER RECURSIVE PATH"
-      recursive_path(word, target)
+      puts "-----(path #{count}) RE-ENTER RECURSIVE PATH"
+      recursive_path(word, target, count)
     end
   end
   puts "** END OF FUNCTION, Solution = #{$solution.inspect} **"
 end
 
-word_chain("slides", "glider")
+word_chain("ruby", "code", 0)

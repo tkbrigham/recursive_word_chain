@@ -34,7 +34,8 @@ def poss_words(current, target)
     output << add_let_words(current)
     output << del_let_words(current)
   end
-  output.flatten!.uniq!.reject! { |word| word == current }
+  output.flatten!.uniq!
+  output.delete(current)
   output
 end
 
