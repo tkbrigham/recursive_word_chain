@@ -2,11 +2,15 @@ require_relative 'possible_words'
 
 def optimal_length(starting_word, target)
   count ||= (starting_word.length - target.length).abs + 1
-  (0..short_word_len(starting_word, target)).each do |index|
-    count += 1 unless target[index] == starting_word[index]
+  short_word = starting_word.length < target.length ? starting_word : target
+  long_word = starting_word.length > target.length ? starting_word : target
+  (0..short_word.length-1).each do |index|
+    count += 1 unless long_word.include?(short_word[index])
   end
   count
 end
+
+#puts optimal_length("ran","oranges")
 
 def word_chain(starting_word, target, target_length=nil)
   $solution ||= [starting_word]
@@ -52,8 +56,8 @@ def recursive_path(current, target, count)
       $solution.pop
       return $solution.inspect
     end
-  else
 
+  else
     if ($solution.length + 1) == $target_length
       puts "SOLUTION LENGTH MAX WITHOUT SOL_FOUND, POP AND EXIT"
       return $solution.pop
@@ -76,7 +80,7 @@ def recursive_path(current, target, count)
       recursive_path(word, target, count)
     end
   end
-  $solution.pop
+  $solution.pop unless $solution == false
 end
 
 #word_chain("codify", "sorry")

@@ -24,8 +24,6 @@ def run_it
   unless chain.nil?
     puts "Your solution is: #{chain.join(" --> ")}"
     puts "Number of steps: #{chain.length}", ""
-  else
-    puts "No chain detected!"
   end
 end
 
