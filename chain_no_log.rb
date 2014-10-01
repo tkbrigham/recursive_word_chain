@@ -2,8 +2,8 @@ require_relative 'possible_words'
 
 def optimal_lenth(starting_word, target)
   count ||= (starting_word.length - target.length).abs + 1
-  (0..starting_word.length-1).each do |index|
-    count += 1 unless target.include?(starting_word[index])
+  (0..short_word_len(starting_word, target)).each do |index|
+    count += 1 unless target[index] == starting_word[index]
   end
   count
 end

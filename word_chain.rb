@@ -21,8 +21,12 @@ def run_it
   puts "", "One moment while I calculate the word chain . . .", ""
   chain = word_chain(starting_word, target)
   puts "____________________________________________", ""
-  puts "Your solution is: #{chain.join(" --> ")}"
-  puts "Number of steps: #{chain.length}", ""
+  unless chain.nil?
+    puts "Your solution is: #{chain.join(" --> ")}"
+    puts "Number of steps: #{chain.length}", ""
+  else
+    puts "No chain detected!"
+  end
 end
 
 def get_starting

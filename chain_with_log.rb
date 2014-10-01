@@ -2,8 +2,8 @@ require_relative 'possible_words'
 
 def optimal_length(starting_word, target)
   count ||= (starting_word.length - target.length).abs + 1
-  (0..starting_word.length-1).each do |index|
-    count += 1 unless target.include?(starting_word[index])
+  (0..short_word_len(starting_word, target)).each do |index|
+    count += 1 unless target[index] == starting_word[index]
   end
   count
 end
@@ -19,6 +19,9 @@ def word_chain(starting_word, target, target_length=nil)
     puts "++++ WORD_CHAIN METHOD HAS FOUND SOL AT TARGET LENGTH #{$target_length} ++++"
     puts "***************************"
     return $solution
+  elsif $solution.length < ($target_length - 2)
+    puts "++++ NO CHAIN DETECTED ++++"
+    return
   else
     puts "++++ WORD_CHAIN METHOD NOT AT TARGET LENGTH ++++"
     $target_length += 1
