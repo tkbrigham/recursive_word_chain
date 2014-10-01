@@ -19,9 +19,6 @@ def word_chain(starting_word, target, target_length=nil)
     puts "++++ WORD_CHAIN METHOD HAS FOUND SOL AT TARGET LENGTH #{$target_length} ++++"
     puts "***************************"
     return $solution
-  elsif $solution.length < ($target_length - 2)
-    puts "++++ NO CHAIN DETECTED ++++"
-    return
   else
     puts "++++ WORD_CHAIN METHOD NOT AT TARGET LENGTH ++++"
     $target_length += 1
