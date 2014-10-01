@@ -1,12 +1,12 @@
 require_relative 'possible_words'
 
 def optimal_length(starting_word, target)
-  count ||= 0
-  starting_word.split.each do |let|
+  count ||= (starting_word.length - target.length).abs + 1
+  (0..starting_word.length-1).each do |index|
+    count += 1 unless target.include?(starting_word[index])
   end
+  count
 end
-
-puts optimal_length("dog", "dogs")
 
 def word_chain(starting_word, target, target_length=nil)
   $solution ||= [starting_word]
@@ -17,9 +17,8 @@ def word_chain(starting_word, target, target_length=nil)
   recursive_path(starting_word, target, 0)
   if $sol_found && $solution.length <= $target_length
     puts "++++ WORD_CHAIN METHOD HAS FOUND SOL AT TARGET LENGTH #{$target_length} ++++"
-    puts "", "----------------------", "Solution: #{$solution.join(" --> ")}"
-    puts "", "Steps: #{$target_length}"
-    return
+    puts "***************************"
+    return $solution
   else
     puts "++++ WORD_CHAIN METHOD NOT AT TARGET LENGTH ++++"
     $target_length += 1

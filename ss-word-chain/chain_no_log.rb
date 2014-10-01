@@ -1,12 +1,11 @@
 require_relative 'possible_words'
 
-def optimal_length(starting_word, target)
-  length_diff = (starting_word.length - target.length).abs
-  let_diff = 0
+def optimal_lenth(starting_word, target)
+  count ||= (starting_word.length - target.length).abs + 1
   (0..starting_word.length-1).each do |index|
-    let_diff += 1 if starting_word[index] != target[index]
+    count += 1 unless target.include?(starting_word[index])
   end
-  return length_diff + let_diff
+  count
 end
 
 def word_chain(starting_word, target, target_length=nil)
